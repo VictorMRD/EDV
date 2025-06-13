@@ -1,8 +1,20 @@
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "./lib/auth0";
 
 export async function middleware(request: NextRequest) {
-  return await auth0.middleware(request);
+  const authRes = await auth0.middleware(request)
+
+  if(request.nextUrl.pathname.startsWith("/auth")){
+    return authRes
+  }
+
+  const session = await auth0.getSession(request)
+
+  if(!session){
+    return NextResponse.redirect(new URL("/", request.nextUrl.origin))
+  }
+
+  return authRes;
 }
 
 export const config = {
@@ -13,6 +25,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|$).*)",
   ],
 };
