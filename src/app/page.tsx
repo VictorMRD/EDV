@@ -23,9 +23,14 @@ export default async function Home() {
   }
 
   // If session exists, show a welcome message and logout button
+  console.log(session.user)
+  console.log(session)
+  console.log()
   return (
     <main>
       <h1>Bienvenido, {session.user.name}!</h1>
+      <p>{session['https://edv.com/roles']}</p>
+      <p>user role {session.user['https://edv.com/roles']}</p>
       <p>
         <a href="/auth/logout">
           <button>Cerrar sesión</button>
