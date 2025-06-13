@@ -14,6 +14,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.nextUrl.origin))
   }
 
+  if(request.nextUrl.pathname.startsWith("/admin")){
+    if(session.user.user_role == 'admin'){
+      return authRes;
+    }
+
+    return NextResponse.redirect(new URL("/", request.nextUrl.origin))
+  }
+
   return authRes;
 }
 
