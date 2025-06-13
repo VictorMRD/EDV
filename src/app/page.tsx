@@ -3,10 +3,8 @@ import { auth0 } from "@/lib/auth0";
 import './globals.css';
 
 export default async function Home() {
-  // Fetch the user session
   const session = await auth0.getSession();
 
-  // If no session, show sign-up and login buttons
   if (!session) {
     return (
       <main>
@@ -22,14 +20,9 @@ export default async function Home() {
     );
   }
 
-  // If session exists, show a welcome message and logout button
-  console.log(session.user)
-  console.log(session)
-  console.log()
   return (
     <main>
       <h1>Bienvenido, {session.user.name}!</h1>
-      <p>{session['https://edv.com/roles']}</p>
       <p>user role {session.user['https://edv.com/roles']}</p>
       <p>
         <a href="/auth/logout">
