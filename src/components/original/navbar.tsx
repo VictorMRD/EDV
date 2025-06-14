@@ -65,11 +65,42 @@ function ConditionalNavMenu({ title, user_role, link}){
     }
 }
 
-export function Navbar() {
+function AuthenticateUser({flag}){
+  if(flag == false){
+    return (
+          <NavigationMenuItem>
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+              <Link href="/auth/login">Iniciar sesión</Link>
+            </NavigationMenuLink>
+            <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+              <Link href="/auth/login?screen_hint=signup">Registrate</Link>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+    )
+  } else {
+    return (
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+          <Link href="/auth/logout">Cerrar sesión</Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+    )
+  }
+}
+
+export function Navbar(session) {
   const { user, isLoading, error } = useUser()
   let user_role = null
   if(user)
     user_role = user["https://edv.com/roles"]
+  const flag = user ? true : false
+
+  if(isLoading){
+    return (
+      <div className="w-[400px] h-[50px] border-2 rounded-md mt-4"></div>
+    );
+  }
+
   return (
     <NavigationMenu viewport={false} className="gap-4 border-1 mt-4 rounded-md p-2" suppressHydrationWarning>
       <NavigationMenuList>
@@ -79,20 +110,20 @@ export function Navbar() {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <ConditionalNavMenu title="Crear publicación" user_role={user_role} link="/admin/create"/>
-          </NavigationMenuLink>
+          <ConditionalNavMenu title="Crear publicación" user_role={user_role} link="/admin/create"/>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
             <Link href="/publications">Publicaciones</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+        <AuthenticateUser flag={flag}/>
       </NavigationMenuList>
       <ModeToggle></ModeToggle>
     </NavigationMenu>
   )
 }
+
 function ListItem({
   title,
   children,
