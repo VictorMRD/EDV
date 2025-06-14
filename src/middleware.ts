@@ -10,19 +10,15 @@ export async function middleware(request: NextRequest) {
 
   const session = await auth0.getSession(request)
 
-  if(!session){
-    return NextResponse.redirect(new URL("/", request.nextUrl.origin))
+  if(!request.nextUrl.pathname.startsWith("/admin")){
+    return authRes;
+  }
+  
+  if(session?.user.user_role == 'admin'){
+    return authRes;
   }
 
-  if(request.nextUrl.pathname.startsWith("/admin")){
-    if(session.user.user_role == 'admin'){
-      return authRes;
-    }
-
-    return NextResponse.redirect(new URL("/", request.nextUrl.origin))
-  }
-
-  return authRes;
+  return NextResponse.redirect(new URL("/", request.nextUrl.origin))
 }
 
 export const config = {
