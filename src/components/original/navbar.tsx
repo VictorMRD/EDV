@@ -71,7 +71,7 @@ export function Navbar() {
   if(user)
     user_role = user["https://edv.com/roles"]
   return (
-    <NavigationMenu viewport={false} className="gap-4 border-1 mt-4 rounded-md p-2">
+    <NavigationMenu viewport={false} className="gap-4 border-1 mt-4 rounded-md p-2" suppressHydrationWarning>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
