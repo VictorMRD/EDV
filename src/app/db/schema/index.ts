@@ -1,0 +1,1 @@
+export { publications } from "@/app/db/schema/publications.schema";
