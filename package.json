@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:drizzle-generate": "npx drizzle-kit generate",
+    "db:drizzle-migrate": "npx drizzle-kit migrate",
+    "db:drizzle-seed": "npx tsx ./src/app/db/seed.ts"
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^4.6.1",
@@ -17,6 +20,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.44.5",
+    "drizzle-seed": "^0.3.1",
+    "drizzle-zod": "^0.8.3",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.515.0",
     "next": "15.3.3",
@@ -30,12 +35,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^10.0.0",
     "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/pg": "^8.15.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.2",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
